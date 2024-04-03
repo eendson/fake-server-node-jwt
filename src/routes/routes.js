@@ -1,20 +1,22 @@
 const express = require("express");
+const cors = require("cors");
+const config = require("../libs/config");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
 const app = express();
 const port = 3000;
+
 
 app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/sign", (req, res) => {
-  const email = "seuemail@seuemail.com.br";
-  const password = "senha";
+  const email = config.credentials.email;
+  const password = config.credentials.password;
 
   if (req.body.email === email && req.body.password === password) {
     const data = {
-      nome: "Valor do chave nome gerada no jwt, digite aqui o valor que desejar.",
+      nome: "Valor da chave nome gerada no jwt, digite aqui o valor que desejar.",
       email,
       role: ["sysAdmin"],
     };
@@ -32,3 +34,4 @@ app.post("/sign", (req, res) => {
 app.listen(port, () => {
   console.log(`Link => http://localhost:${port}`);
 });
+
